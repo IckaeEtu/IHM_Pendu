@@ -10,13 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.Region;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar.ButtonData ;
-import javafx.scene.control.ButtonType ;
+
 import java.util.List;
 import java.util.Arrays;
 import java.io.File;
@@ -108,8 +104,15 @@ public class Pendu extends Application {
      */
     private Pane titre(){
         // A implementer          
-        Pane banniere = new Pane();
-        return banniere;
+        HBox entete = new HBox();
+        entete.getChildren().add(new Label("Jeu du Pendu"));
+        Button home = new Button("",new ImageView("file:../img/home.png"));
+        Button parametres = new Button("",new ImageView("file:../img/parametres.png"));
+        Button info = new Button("",new ImageView("file:../img/info.png"));
+        info.setOnAction(new ControleurInfos(this));
+        home.setOnAction(new RetourAccueil(modelePendu, this));
+        entete.getChildren().addAll(home,parametres,info);
+        return entete;
     }
 
     // /**
@@ -153,7 +156,8 @@ public class Pendu extends Application {
     }
 
     public void modeAccueil(){
-        // A implementer
+        this.panelCentral.setCenter(new PageAccueil());
+        this.laScene();
     }
     
     public void modeJeu(){

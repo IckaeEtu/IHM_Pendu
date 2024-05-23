@@ -1,5 +1,6 @@
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -30,7 +31,10 @@ public class Chronometre extends Text{
      * Ce constructeur créer la Timeline, la KeyFrame et le contrôleur
      */
     public Chronometre(){
-        // A implémenter
+        this.setText("0:0:0");
+        this.timeline = new Timeline();
+        this.keyFrame = new KeyFrame(Duration.ONE, new KeyValue());
+        this.actionTemps = new ControleurChronometre(this);
     }
 
     /**
