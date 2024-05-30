@@ -91,8 +91,9 @@ public class Pendu extends Application {
         this.lesImages = new ArrayList<Image>();
         this.chargerImages("./img");
         this.panelCentral = new BorderPane();
-        this.clavier = new Clavier("abcdefghijklmnopqrstuvwxyz", new ControleurLettres(modelePendu, this), 8);
+        this.clavier = new Clavier("ABCDEFGHIJKLMNOPQRSTUVWXYZ", new ControleurLettres(modelePendu, this), 8);
         this.chrono = new Chronometre();
+        pg = new ProgressBar();
 
         // A terminer d'implementer
     }
@@ -208,19 +209,22 @@ public class Pendu extends Application {
     
     public void modeJeu(){
         HBox pageJeu = new HBox();
-
+        motCrypte = new Text();
         VBox centre = new VBox();
-        Label motCrypte = new Label(modelePendu.getMotCrypte());
+        this.motCrypte.setText(this.modelePendu.getMotCrypte());
         centre.getChildren().add(motCrypte);
-        centre.getChildren().add(this.clavier);
+        dessin = new ImageView();
+        dessin.setImage(lesImages.get(0));
+        centre.getChildren().add(dessin);
+        centre.getChildren().addAll(pg,this.clavier);
+
         pageJeu.getChildren().add(centre);
 
         VBox droite = new VBox();
         droite.getChildren().add(new Label("Niveau" + leNiveau));
         TitledPane chronoPane = new TitledPane("Chronomètre", this.chrono);
-        Button newMot = new Button("Nouveau Mot");
-        newMot.setOnAction(new ControleurLancerPartie(modelePendu, this));
-        droite.getChildren().addAll(chronoPane,newMot);
+        bJouer.setText("Nouveau Mot");
+        droite.getChildren().addAll(chronoPane,bJouer);
         pageJeu.getChildren().add(droite);
         boutonMaison.setDisable(false);
         boutonParametres.setDisable(true);
@@ -242,6 +246,14 @@ public class Pendu extends Application {
      */
     public void majAffichage(){
         this.clavier.desactiveTouches(modelePendu.getLettresEssayees());
+        dessin.setImage(lesImages.get(modelePendu.getNbErreursMax() - modelePendu.getNbErreursRestants()));
+        
+        motCrypte.setText(modelePendu.getMotCrypte());
+        double avancement = (double)(modelePendu.getMotATrouve().length()-modelePendu.getNbLettresRestantes())/modelePendu.getMotATrouve().length();
+        System.out.println((modelePendu.getMotATrouve().length()-modelePendu.getNbLettresRestantes()));
+        System.out.println(modelePendu.getMotATrouve().length());
+        System.out.println(avancement);
+        pg.setProgress(avancement);
     }
 
     /**
@@ -267,13 +279,15 @@ public class Pendu extends Application {
     
     public Alert popUpMessageGagne(){
         // A implementer
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Vous avez gagné, bien ouej chef");   
+        alert.setTitle("C'est la win");     
         return alert;
     }
     
     public Alert popUpMessagePerdu(){
         // A implementer    
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Trop nul, skill issue");
+        alert.setTitle("Nuuuuuuuuuuul perdu");
         return alert;
     }
 
