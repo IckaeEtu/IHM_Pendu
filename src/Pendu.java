@@ -116,7 +116,7 @@ public class Pendu extends Application {
         BorderPane entete = new BorderPane();
         entete.setMinWidth(65);
         Label titre = new Label("Jeu du Pendu");
-        titre.setFont(new Font(55));
+        titre.setFont(Font.font("Arial", 40));
         entete.setLeft(titre);
         ImageView image1 = new ImageView(new Image("file:img/home.png"));
         ImageView image2 = new ImageView("file:img/parametres.png");
@@ -133,6 +133,7 @@ public class Pendu extends Application {
         Button info = new Button("",image3);
         info.setOnAction(new ControleurInfos(this));
         this.boutonMaison.setOnAction(new RetourAccueil(modelePendu, this));
+        boutonParametres.setOnAction(new ControleurParametre(this));
         this.boutonMaison.setMinWidth(5);
         info.setMinWidth(5);
         this.boutonParametres.setMinWidth(5);
@@ -182,31 +183,38 @@ public class Pendu extends Application {
             this.lesImages.add(new Image(file.toURI().toString()));
         }
     }
-
+    /**Met l'application en mode accueil */
     public void modeAccueil(){
         VBox pageAccueil = new VBox();
         pageAccueil.setPadding(new Insets(10));
         this.bJouer = new Button("Lancer une partie");
         bJouer.setOnAction(new ControleurLancerPartie(modelePendu, this));
+
         VBox niveauxPane = new VBox();
         ToggleGroup group = new ToggleGroup();
         RadioButton facile = new RadioButton("Facile");
+        facile.setOnAction(new ControleurNiveau(modelePendu));
         facile.setToggleGroup(group);
         RadioButton moyen = new RadioButton("Moyen");
+        moyen.setOnAction(new ControleurNiveau(modelePendu));
         moyen.setToggleGroup(group);
         RadioButton difficile = new RadioButton("Difficile");
+        difficile.setOnAction(new ControleurNiveau(modelePendu));
         difficile.setToggleGroup(group);
         RadioButton expert = new RadioButton("Expert");
+        expert.setOnAction(new ControleurNiveau(modelePendu));
         expert.setToggleGroup(group);
-
         niveauxPane.getChildren().addAll(facile,moyen,difficile,expert);
         TitledPane difficulte = new TitledPane("Niveau de difficulté",niveauxPane);
+        difficulte.setCollapsible(false);
+
         pageAccueil.getChildren().addAll(this.bJouer,difficulte);
         boutonMaison.setDisable(true);
         boutonParametres.setDisable(false);
         this.panelCentral.setCenter(pageAccueil);
     }
-    
+
+    /**Met l'application en mode jeu */
     public void modeJeu(){
         HBox pageJeu = new HBox();
         motCrypte = new Text();
@@ -223,6 +231,7 @@ public class Pendu extends Application {
         VBox droite = new VBox();
         droite.getChildren().add(new Label("Niveau" + leNiveau));
         TitledPane chronoPane = new TitledPane("Chronomètre", this.chrono);
+        chronoPane.setCollapsible(false);
         bJouer.setText("Nouveau Mot");
         droite.getChildren().addAll(chronoPane,bJouer);
         pageJeu.getChildren().add(droite);
@@ -233,7 +242,13 @@ public class Pendu extends Application {
     }
     
     public void modeParametres(){
-        // A implémenter
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Ah bah non on va pas mettre des paramètres dans un pendu \n"
+        +"Retournez jouer");
+        alert.setTitle("Nope");
+        boutonParametres.setDisable(true);
+        alert.showAndWait();
+        boutonParametres.setDisable(false);
+        
     }
 
     /** lance une partie */
@@ -261,10 +276,8 @@ public class Pendu extends Application {
      * @return le chronomètre du jeu
      */
     public Chronometre getChrono(){
-        // A implémenter
-        return null; // A enlever
+        return this.chrono;
     }
-
     public Alert popUpPartieEnCours(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"La partie est en cours!\n Etes-vous sûr de l'interrompre ?", ButtonType.YES, ButtonType.NO);
         alert.setTitle("Attention");
@@ -273,7 +286,12 @@ public class Pendu extends Application {
         
     public Alert popUpReglesDuJeu(){
         // A implementer
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Voici les règles du jeu :\n"
+        + "Essayez des lettres\n"
+        + "Si c'est une lettre du mot, elle sera révélée.\n"
+        + "Si c'est pas dans le mot, vous perdez une chance et le dessin avance.\n"
+        + "Si le pendu est entier, vous perdez la partie !");
+        alert.setTitle("Règles du jeu");
         return alert;
     }
     

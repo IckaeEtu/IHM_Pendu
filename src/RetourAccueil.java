@@ -32,7 +32,6 @@ public class RetourAccueil implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent actionEvent) {
-        vuePendu.modeJeu();
         // A implémenter
         Optional<ButtonType> reponse = this.vuePendu.popUpPartieEnCours().showAndWait(); // on lance la fenêtre popup et on attends la réponse
         // si la réponse est oui
