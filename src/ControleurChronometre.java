@@ -41,8 +41,9 @@ public class ControleurChronometre implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         long heureDuSysteme = System.currentTimeMillis();
         this.tempsEcoule += heureDuSysteme - this.tempsPrec;
-        chrono.setTime(tempsPrec+tempsEcoule);
         this.tempsPrec = heureDuSysteme;
+        chrono.setTime(tempsEcoule);
+        
     }
 
 

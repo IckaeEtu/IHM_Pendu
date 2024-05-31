@@ -9,21 +9,21 @@
             "name": "Pendu",
             "request": "launch",
             "mainClass": "Pendu",
-            "vmArgs": "--module-path \"C:/Program Files/openjfx-22.0.1_windows-x64_bin-sdk/javafx-sdk-22.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path /usr/share/openjfx/lib/ --add-modules javafx.controls,javafx.fxml",
             "projectName": "truc tp noté ihm_75d8f366"
         },
         {
             "type": "java",
             "name": "Current File",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/Program Files/openjfx-22.0.1_windows-x64_bin-sdk/javafx-sdk-22.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path /usr/share/openjfx/lib/ --add-modules javafx.controls,javafx.fxml",
             "mainClass": "${file}"
         },
         {
             "type": "java",
             "name": "Pendu",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/Program Files/openjfx-22.0.1_windows-x64_bin-sdk/javafx-sdk-22.0.1/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path /usr/share/openjfx/lib/ --add-modules javafx.controls,javafx.fxml",
             "mainClass": "Pendu",
             "projectName": "pendu_pour_etu_aaf04ab7"
         }

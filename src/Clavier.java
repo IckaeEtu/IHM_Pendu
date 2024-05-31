@@ -28,6 +28,8 @@ public class Clavier extends TilePane{
     public Clavier(String touches, EventHandler<ActionEvent> actionTouches, int tailleLigne) {
         super();
         this.clavier = new ArrayList<>();
+        this.setHgap(5);
+        this.setVgap(5);
         this.setPrefColumns(tailleLigne);
         this.setPrefRows((int) Math.ceil(27/tailleLigne));
         for (char c : touches.toCharArray()) {

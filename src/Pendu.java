@@ -50,7 +50,7 @@ public class Pendu extends Application {
      */
     private Text motCrypte;
     /**
-     * la barre de progression qui indique le nombre de tentatives
+     * la barre de progression quiniveauxPane indique le nombre de tentatives
      */
     private ProgressBar pg;
     /**
@@ -60,7 +60,7 @@ public class Pendu extends Application {
     /**
      * le text qui indique le niveau de difficulté
      */
-    private Text leNiveau;
+    private String leNiveau;
     /**
      * le chronomètre qui sera géré par une clasee à implémenter
      */
@@ -193,16 +193,16 @@ public class Pendu extends Application {
         VBox niveauxPane = new VBox();
         ToggleGroup group = new ToggleGroup();
         RadioButton facile = new RadioButton("Facile");
-        facile.setOnAction(new ControleurNiveau(modelePendu));
+        facile.setOnAction(new ControleurNiveau(modelePendu,this));
         facile.setToggleGroup(group);
         RadioButton moyen = new RadioButton("Moyen");
-        moyen.setOnAction(new ControleurNiveau(modelePendu));
+        moyen.setOnAction(new ControleurNiveau(modelePendu,this));
         moyen.setToggleGroup(group);
         RadioButton difficile = new RadioButton("Difficile");
-        difficile.setOnAction(new ControleurNiveau(modelePendu));
+        difficile.setOnAction(new ControleurNiveau(modelePendu,this));
         difficile.setToggleGroup(group);
         RadioButton expert = new RadioButton("Expert");
-        expert.setOnAction(new ControleurNiveau(modelePendu));
+        expert.setOnAction(new ControleurNiveau(modelePendu,this));
         expert.setToggleGroup(group);
         niveauxPane.getChildren().addAll(facile,moyen,difficile,expert);
         TitledPane difficulte = new TitledPane("Niveau de difficulté",niveauxPane);
@@ -219,6 +219,8 @@ public class Pendu extends Application {
         HBox pageJeu = new HBox();
         motCrypte = new Text();
         VBox centre = new VBox();
+        centre.setPadding(new Insets(5));
+        pageJeu.setAlignment(Pos.BASELINE_CENTER);
         this.motCrypte.setText(this.modelePendu.getMotCrypte());
         centre.getChildren().add(motCrypte);
         dessin = new ImageView();
@@ -229,7 +231,8 @@ public class Pendu extends Application {
         pageJeu.getChildren().add(centre);
 
         VBox droite = new VBox();
-        droite.getChildren().add(new Label("Niveau" + leNiveau));
+        droite.setPadding(new Insets(5));
+        droite.getChildren().add(new Label("Niveau " + leNiveau));
         TitledPane chronoPane = new TitledPane("Chronomètre", this.chrono);
         chronoPane.setCollapsible(false);
         bJouer.setText("Nouveau Mot");
@@ -254,6 +257,10 @@ public class Pendu extends Application {
     /** lance une partie */
     public void lancePartie(){
         modeJeu();
+        modelePendu.setMotATrouver();
+        chrono.resetTime();
+        chrono.start();
+        majAffichage();
     }
 
     /**
@@ -304,7 +311,7 @@ public class Pendu extends Application {
     
     public Alert popUpMessagePerdu(){
         // A implementer    
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Trop nul, skill issue");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Trop nul, skill issue\n Le mot était "+modelePendu.getMotATrouve());
         alert.setTitle("Nuuuuuuuuuuul perdu");
         return alert;
     }
@@ -327,5 +334,8 @@ public class Pendu extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-    }    
+    }   
+    
+    /**Change le niveau affiché */
+    public void setLeNiveau(String niv){leNiveau = niv;}
 }
