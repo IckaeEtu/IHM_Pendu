@@ -221,7 +221,7 @@ public class Pendu extends Application {
         VBox centre = new VBox();
         centre.setPadding(new Insets(5));
         pageJeu.setAlignment(Pos.BASELINE_CENTER);
-        this.motCrypte.setText(this.modelePendu.getMotCrypte());
+        this.motCrypte.setText(this.leNiveau);
         centre.getChildren().add(motCrypte);
         dessin = new ImageView();
         dessin.setImage(lesImages.get(0));
