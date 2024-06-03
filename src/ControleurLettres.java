@@ -33,11 +33,13 @@ public class ControleurLettres implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent actionEvent) {
+        if (modelePendu.gagne()){vuePendu.popUpMessageGagne().showAndWait();
+            vuePendu.modeAccueil();}
+        if (modelePendu.perdu()){vuePendu.popUpMessagePerdu().showAndWait();
+            vuePendu.modeAccueil();}
         Button b = (Button)actionEvent.getTarget();
         String lettre = b.getText();
-
         modelePendu.essaiLettre(lettre.charAt(0));
-
         vuePendu.majAffichage();
     }
 }
